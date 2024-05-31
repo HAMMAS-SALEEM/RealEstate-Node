@@ -1,8 +1,8 @@
-import db from '../models/index'
+import db from '../models/index.js'
 
 const User = db.user
 
-checkDuplicateUsernameOrEmail = (req, res, next) => {
+const checkDuplicateUsernameOrEmail = (req, res, next) => {
   User.findOne({
     username: req.user.username
   }).exec((err, user) => {
