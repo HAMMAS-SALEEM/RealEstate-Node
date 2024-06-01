@@ -1,4 +1,4 @@
-import estateController from '../controllers/estate.controller'
+import estateController from '../controllers/estate.controller.js'
 
 export default app => {
   app.use((req, res, next) => {
@@ -9,14 +9,8 @@ export default app => {
     next()
   })
   app.get('/api/estates', estateController.getAllEstates)
-  app.post('/api/estates', estateController.createEstate)
+  app.post('/api/estate/create', estateController.createEstate)
   app.get('/api/estates/:id', estateController.getEstateById)
   app.put('/api/estates/:id', estateController.updateEstate)
   app.delete('/api/estates/:id', estateController.deleteEstate)
-  app.get('/api/estates/search/price', estateController.searchEstateByPrice)
-  app.get(
-    '/api/estates/search/location',
-    estateController.searchEstateByLocation
-  )
-  app.get('/api/estates/search/type', estateController.searchEstateByType)
 }
