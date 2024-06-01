@@ -22,7 +22,6 @@ export const signup = (req, res) => {
 }
 
 export const signin = (req, res) => {
-  console.log(req.body.email);
   User.findOne({
       email: req.body.email
   }).then((user) => {
@@ -55,4 +54,4 @@ const authController = {
   signin
 }
 
-export default authController
+export default authController;
