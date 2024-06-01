@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import db from '../models/index.js'
 
 const Estate = db.estate
-const User = db.user
 
 export const getAllEstates = (req, res) => {
   return Estate.find()
@@ -69,7 +68,7 @@ export const createEstate = (req, res) => {
     swimmingPool: req.body.swimmingPool,
     balcony: req.body.balcony,
     garden: req.body.garden,
-    user_id: user_id,
+    user_id: user_id
   })
   estate
     .save()
@@ -82,7 +81,7 @@ export const createEstate = (req, res) => {
 }
 
 export const updateEstate = (req, res) => {
-    console.log(req.body.id)
+  console.log(req.body.id)
   Estate.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
     description: req.body.description,
@@ -93,11 +92,11 @@ export const updateEstate = (req, res) => {
     bedrooms: req.body.bedrooms,
     bathrooms: req.body.bathrooms
   })
-  .then((data) => {
-    console.log(data);
-    return res.status(200).send({message: "Record Updated Successfully"})
-  })
-  .catch(error => res.status(500).send({ message: error.message }))
+    .then(data => {
+      console.log(data)
+      return res.status(200).send({ message: 'Record Updated Successfully' })
+    })
+    .catch(error => res.status(500).send({ message: error.message }))
 }
 
 export const deleteEstate = (req, res) => {
