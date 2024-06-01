@@ -10,7 +10,7 @@ export default app => {
   })
   app.get('/api/estates', estateController.getAllEstates)
   app.post('/api/estate/create', estateController.createEstate)
-  app.get('/api/estates/:id', estateController.getEstateById)
-  app.put('/api/estates/:id', estateController.updateEstate)
-  app.delete('/api/estates/:id', estateController.deleteEstate)
+  app.get('/api/estate', estateController.getEstateById)
+  app.put('/api/estate/:id', estateController.updateEstate)
+  app.delete('/api/estate', estateController.deleteEstate)
 }

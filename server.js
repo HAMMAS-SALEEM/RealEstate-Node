@@ -1,7 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import db from './app/models/index.js'
 import authRoutes from './app/routes/auth.routes.js'
 import userRoutes from './app/routes/user.routes.js'
 import estateRoutes from './app/routes/estate.routes.js'
@@ -24,10 +23,10 @@ mongoose
     process.exit()
   })
 
-authRoutes(app)
-userRoutes(app)
-estateRoutes(app)
-
 app.listen('3001', () => {
   console.log('Server is running on port 3001')
 })
+
+authRoutes(app)
+userRoutes(app)
+estateRoutes(app)
