@@ -58,7 +58,6 @@ export const getEstatebyUserId = (req, res) => {
 }
 
 export const createEstate = (req, res) => {
-  console.log(req.body.user_id);
   const user_id = new mongoose.Types.ObjectId(req.body.user_id)
   const estate = new Estate({
     name: req.body.name,
@@ -91,12 +90,14 @@ export const createEstate = (req, res) => {
     .catch(error => res.status(500).send({ message: error.message }))
 }
 
-export const updateEstate = (id, estate) => {
+export const updateEstate = (req, res) => {
   return Estate.findByIdAndUpdate(id, estate)
 }
 
-export const deleteEstate = id => {
-  return Estate.findByIdAndDelete(id)
+export const deleteEstate = (req, res) => {
+  Estate.findByIdAndDelete(req.body.id)
+  .then(() => res.status(200).send({message: "Record Deleted Successfully"}))
+  .catch(error => res.status(500).send({ message: error.message }))
 }
 
 export default {
