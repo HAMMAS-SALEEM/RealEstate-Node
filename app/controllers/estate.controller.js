@@ -38,7 +38,27 @@ export const getEstateById = (req, res) => {
     .catch(error => res.status(500).send({ message: error.message }))
 }
 
+export const getEstatebyUserId = (req, res) => {
+    return Estate.find({user_id: req.body.user_id})
+     .then(estates => {
+        if (estates.length === 0) {
+          return res
+           .status(404)
+           .send({ status: 404, message: 'No Estates Found', estates })
+        }
+        res
+         .status(200)
+         .send({
+            status: 200,
+            message: 'Estates Retrieved Successfully',
+            estates
+          })
+      })
+     .catch(error => res.status(500).send({ message: error.message }))
+}
+
 export const createEstate = (req, res) => {
+  console.log(req.body.user_id);
   const user_id = new mongoose.Types.ObjectId(req.body.user_id)
   const estate = new Estate({
     name: req.body.name,
@@ -84,5 +104,6 @@ export default {
   getEstateById,
   createEstate,
   updateEstate,
-  deleteEstate
+  deleteEstate,
+  getEstatebyUserId,
 }

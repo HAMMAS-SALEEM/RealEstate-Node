@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
     config.secret,
     (error, decoded) => {
         if (error) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-        req.userId = decoded.id;
+        req.body.user_id = decoded.id;
         next();
     }
   )
