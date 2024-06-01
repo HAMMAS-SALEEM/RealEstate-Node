@@ -60,21 +60,16 @@ export const createEstate = (req, res) => {
     description: req.body.description,
     price: req.body.price,
     image: req.body.image,
-    location: req.body.location,
+    address: req.body.address,
     type: req.body.type,
     bedrooms: req.body.bedrooms,
     bathrooms: req.body.bathrooms,
-    user_id: user_id
-    //     parking: req.body.parking,
-    //     garage: req.body.garage,
-    //     furnished: req.body.furnished,
-    //     elevator: req.body.elevator,
-    //     swimmingPool: req.body.swimmingPool,
-    //     balcony: req.body.balcony,
-    //     garden: req.body.garden,
-    //     airConditioning: req.body.airConditioning,
-    //     heating: req.body.heating,
-    //     internet: req.body.internet,
+    garage: req.body.garage,
+    furnished: req.body.furnished,
+    swimmingPool: req.body.swimmingPool,
+    balcony: req.body.balcony,
+    garden: req.body.garden,
+    user_id: user_id,
   })
   estate
     .save()

@@ -11,9 +11,23 @@ const Estate = new mongoose.model(
       type: Number,
       required: true
     },
-    location: {
-      type: String,
-      required: true
+    address: {
+      street: {
+        type: String,
+        required: true
+      },
+      city: {
+        type: String,
+        required: true
+      },
+      state: {
+        type: String,
+        required: true
+      },
+      country: {
+        type: String,
+        required: true
+      }
     },
     description: {
       type: String,
@@ -35,6 +49,26 @@ const Estate = new mongoose.model(
       type: Number,
       required: true
     },
+    garage: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    furnished: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    swimmingPool: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    balcony: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -43,4 +77,4 @@ const Estate = new mongoose.model(
   })
 )
 
-export default Estate;
+export default Estate
