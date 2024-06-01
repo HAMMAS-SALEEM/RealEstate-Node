@@ -1,27 +1,19 @@
-import db from '../models/index'
+import db from '../models/index.js'
 
 const User = db.user
 
-checkDuplicateUsernameOrEmail = (req, res, next) => {
+const checkDuplicateUsernameOrEmail = (req, res, next) => {
   User.findOne({
-    username: req.user.username
-  }).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err })
-      return
-    }
+    username: req.body.username
+  }).then((user) => {
     if (user) {
       res.status(400).send({ message: 'Username is already in use' })
       return
     }
 
     User.findOne({
-      email: req.user.email
-    }).exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: err })
-        return
-      }
+      email: req.body.email
+    }).then((user) => {
       if (user) {
         res.status(400).send({ message: 'Email is already in use' })
         return

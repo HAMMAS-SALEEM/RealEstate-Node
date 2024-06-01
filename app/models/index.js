@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import user from "./user.model"
+import user from "./user.model.js"
 
 mongoose.Promise = global.Promise;
 
