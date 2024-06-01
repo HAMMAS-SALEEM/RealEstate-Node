@@ -7,6 +7,6 @@ export const userAccess = () => {
 }
 
 export default {
-    allAccess,
-    userAccess,
+  allAccess,
+  userAccess
 }

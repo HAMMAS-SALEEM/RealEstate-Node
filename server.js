@@ -4,6 +4,7 @@ import cors from 'cors'
 import db from './app/models/index.js';
 import authRoutes from './app/routes/auth.routes.js';
 import userRoutes from './app/routes/user.routes.js';
+// import estateRoutes from './app/routes/'
 
 export const MONGO_URI = `mongodb+srv://hammassaleem376:6oBlxFzkPWArOBFU@cluster0.615ixwi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -23,7 +24,7 @@ mongoose.connect(MONGO_URI)
 });
 
 authRoutes(app);
-// userRoutes(app);
+userRoutes(app);
 
 app.listen('3001', () => {
   console.log('Server is running on port 3001');

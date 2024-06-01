@@ -10,6 +10,6 @@ export default app => {
     next()
   })
 
-  app.get('/api/all', userController.getAllController);
-  app.get('/api/user', authJwt.verifyToken, userController.getUserController);
+  app.get('/api/all', userController.allAccess);
+  app.get('/api/user', authJwt.verifyToken, userController.userAccess);
 }
