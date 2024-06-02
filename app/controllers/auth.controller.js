@@ -26,10 +26,10 @@ export const signin = (req, res) => {
       email: req.body.email
   }).then((user) => {
     if (!user) {
-      res.status(404).send({ message: 'User Not Found' })
+      res.status(404).send({ message: 'Invalid Email' })
       return
     }
-    let passwordIsValid = bcrypt.hash(req.body.password, user.password)
+    let passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
     if (!passwordIsValid) {
       return res.status(401).send({ message: 'Invalid Password!' })
     }
