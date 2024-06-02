@@ -11,6 +11,10 @@ const Estate = new mongoose.model(
       type: Number,
       required: true
     },
+    propertySize: {
+      type: String,
+      required: true
+    },
     address: {
       street: {
         type: String,
@@ -28,10 +32,6 @@ const Estate = new mongoose.model(
         type: String,
         required: true
       }
-    },
-    description: {
-      type: String,
-      required: true
     },
     image: {
       type: String,

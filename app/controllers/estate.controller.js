@@ -56,7 +56,7 @@ export const createEstate = (req, res) => {
   const user_id = new mongoose.Types.ObjectId(req.body.user_id)
   const estate = new Estate({
     name: req.body.name,
-    description: req.body.description,
+    propertySize: req.body.propertySize,
     price: req.body.price,
     image: req.body.image,
     address: req.body.address,
@@ -84,7 +84,7 @@ export const updateEstate = (req, res) => {
   console.log(req.body.id)
   Estate.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
-    description: req.body.description,
+    propertySize: req.body.propertySize,
     price: req.body.price,
     image: req.body.image,
     location: req.body.location,
