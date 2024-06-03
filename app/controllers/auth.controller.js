@@ -19,7 +19,8 @@ export const signup = (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        accessToken: token
+        accessToken: token,
+        tokenExpiresIn: 86400
       }
       res.status(200).send({ message: 'User Successfully Created!', user: data })
     })
@@ -46,7 +47,8 @@ export const signin = (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        accessToken: token
+        accessToken: token,
+        tokenExpiresIn: 86400
       })
     })
     .catch(error => {
