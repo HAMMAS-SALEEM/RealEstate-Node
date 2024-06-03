@@ -68,6 +68,9 @@ export const createEstate = (req, res) => {
     swimmingPool: req.body.swimmingPool,
     balcony: req.body.balcony,
     garden: req.body.garden,
+    floors: req.body.floors,
+    rooms: req.body.rooms,
+    phoneNumber: req.body.phoneNumber,
     user_id: user_id
   })
   estate
@@ -95,6 +98,9 @@ export const updateEstate = (req, res) => {
     swimmingPool: req.body.swimmingPool,
     balcony: req.body.balcony,
     garden: req.body.garden,
+    floors: req.body.floors,
+    rooms: req.body.rooms,
+    phoneNumber: req.body.phoneNumber,
   })
     .then(estate => {
       return res.status(200).send({ message: 'Record Updated Successfully', estate })

@@ -69,6 +69,18 @@ const Estate = new mongoose.model(
       required: true,
       default: false
     },
+    floors: {
+      type: Number,
+      required: true
+    },
+    rooms: {
+      type: Number,
+      required: true
+    },
+    phoneNumber: {
+      type: String,
+      required: true
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
