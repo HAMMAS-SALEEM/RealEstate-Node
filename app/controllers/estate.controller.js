@@ -81,7 +81,6 @@ export const createEstate = (req, res) => {
 }
 
 export const updateEstate = (req, res) => {
-  console.log(req.body)
   Estate.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
     propertySize: req.body.propertySize,
