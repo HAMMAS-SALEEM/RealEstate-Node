@@ -133,8 +133,8 @@ export const searchEstate = async (req, res) => {
         }
       }
     ])
-    console.log(resp);
-    return res.status(200).send({ message: 'Estate Retrieved Successfully', resp })
+    if(resp.length === 0) return res.status(201).send({message: 'No Estate Found!', searched: resp})
+    return res.status(200).send({ message: 'Estate Retrieved Successfully', searched: resp})
   } catch (error) {
     return res.status(500).send({ message: 'Error retrieving estate'})
   }
