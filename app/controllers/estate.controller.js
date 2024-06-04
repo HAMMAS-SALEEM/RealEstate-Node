@@ -68,6 +68,9 @@ export const createEstate = (req, res) => {
     swimmingPool: req.body.swimmingPool,
     balcony: req.body.balcony,
     garden: req.body.garden,
+    floors: req.body.floors,
+    rooms: req.body.rooms,
+    phoneNumber: req.body.phoneNumber,
     user_id: user_id
   })
   estate
@@ -81,20 +84,26 @@ export const createEstate = (req, res) => {
 }
 
 export const updateEstate = (req, res) => {
-  console.log(req.body.id)
   Estate.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
     propertySize: req.body.propertySize,
     price: req.body.price,
     image: req.body.image,
-    location: req.body.location,
+    address: req.body.address,
     type: req.body.type,
     bedrooms: req.body.bedrooms,
-    bathrooms: req.body.bathrooms
+    bathrooms: req.body.bathrooms,
+    garage: req.body.garage,
+    furnished: req.body.furnished,
+    swimmingPool: req.body.swimmingPool,
+    balcony: req.body.balcony,
+    garden: req.body.garden,
+    floors: req.body.floors,
+    rooms: req.body.rooms,
+    phoneNumber: req.body.phoneNumber,
   })
-    .then(data => {
-      console.log(data)
-      return res.status(200).send({ message: 'Record Updated Successfully' })
+    .then(estate => {
+      return res.status(200).send({ message: 'Record Updated Successfully', estate })
     })
     .catch(error => res.status(500).send({ message: error.message }))
 }

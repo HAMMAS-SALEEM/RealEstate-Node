@@ -1,7 +1,7 @@
 import config from '../config/auth.config.js'
 import db from '../models/index.js'
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import tokenGenerator from '../utils/tokenGenerator.js'
 
 const User = db.user
 
@@ -13,8 +13,16 @@ export const signup = (req, res) => {
   })
   user
     .save()
-    .then(() => {
-      res.status(200).send({ message: 'User Successfully Created!' })
+    .then(user => {
+      const token = tokenGenerator(user._id, config.secret);
+      const data = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        accessToken: token,
+        tokenExpiresIn: 86400
+      }
+      res.status(200).send({ message: 'User Successfully Created!', user: data })
     })
     .catch(err => {
       res.status(500).send({ message: err })
@@ -23,30 +31,29 @@ export const signup = (req, res) => {
 
 export const signin = (req, res) => {
   User.findOne({
-      email: req.body.email
-  }).then((user) => {
-    if (!user) {
-      res.status(404).send({ message: 'User Not Found' })
-      return
-    }
-    let passwordIsValid = bcrypt.hash(req.body.password, user.password)
-    if (!passwordIsValid) {
-      return res.status(401).send({ message: 'Invalid Password!' })
-    }
-    const token = jwt.sign({ id: user.id }, config.secret, {
-      algorithm: 'HS256',
-      allowInsecureKeySizes: true,
-      expiresIn: 86400
-    })
-    res.status(200).send({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      accessToken: token
-    })
-  }).catch((error) => {
-    res.status(500).send({ message: error.message })
+    email: req.body.email
   })
+    .then(user => {
+      if (!user) {
+        res.status(404).send({ message: 'Invalid Email' })
+        return
+      }
+      let passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+      if (!passwordIsValid) {
+        return res.status(401).send({ message: 'Invalid Password!' })
+      }
+      const token = tokenGenerator(user.id, config.secret)
+      res.status(200).send({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        accessToken: token,
+        tokenExpiresIn: 86400
+      })
+    })
+    .catch(error => {
+      res.status(500).send({ message: error.message })
+    })
 }
 
 const authController = {
@@ -54,4 +61,4 @@ const authController = {
   signin
 }
 
-export default authController;
+export default authController
