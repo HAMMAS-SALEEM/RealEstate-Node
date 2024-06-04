@@ -120,66 +120,52 @@ export const deleteEstate = (req, res) => {
 
 export const searchEstate = async (req, res) => {
   try {
-    const searchStage = {
-      $search: {
-        index: 'estates',
-        text: {
-          query: req.query.t,
-          path: {
-            wildcard: '*'
+    const pipeline = [];
+
+      const searchStage = {
+        $search: {
+          index: 'estates',
+          text: {
+            query: req.query.t,
+            path: {
+              wildcard: '*'
+            }
           }
         }
-      }
-    }
+      };
+      pipeline.push(searchStage);
 
-    const matchStage = {}
-    const filterableFields = [
-      'name',
-      'priceMin',
-      'priceMax',
-      'bedrooms',
-      'bathrooms',
-      'type'
-    ]
+    const matchStage = {};
+    const filterableFields = ['priceMin', 'priceMax', 'type'];
+
     filterableFields.forEach(field => {
       if (req.query[field]) {
         if (field === 'priceMin') {
-          matchStage.price = {
-            ...matchStage.price,
-            $gte: Number(req.query[field])
-          }
+          matchStage.price = { ...matchStage.price, $gte: Number(req.query[field]) };
         } else if (field === 'priceMax') {
-          matchStage.price = {
-            ...matchStage.price,
-            $lte: Number(req.query[field])
-          }
-        } else if (['bedrooms', 'bathrooms'].includes(field)) {
-          matchStage[field] = Number(req.query[field])
+          matchStage.price = { ...matchStage.price, $lte: Number(req.query[field]) };
         } else {
-          matchStage[field] = req.query[field]
+          matchStage[field] = req.query[field];
         }
       }
-    })
+    });
 
-    const pipeline = [searchStage]
     if (Object.keys(matchStage).length > 0) {
-      pipeline.push({ $match: matchStage })
+      pipeline.push({ $match: matchStage });
     }
 
-    const resp = await Estate.aggregate(pipeline)
+    const resp = await Estate.aggregate(pipeline);
 
     if (resp.length === 0) {
-      return res
-        .status(201)
-        .send({ message: 'No Estate Found!', searched: resp })
+      return res.status(201).send({ message: 'No Estate Found!', searched: resp });
     }
-    return res
-      .status(200)
-      .send({ message: 'Estate Retrieved Successfully', searched: resp })
+    return res.status(200).send({ message: 'Estate Retrieved Successfully', searched: resp });
   } catch (error) {
-    return res.status(500).send({ message: 'Error retrieving estate' })
+    return res.status(500).send({ message: 'Error retrieving estate' });
   }
-}
+};
+
+
 
 export default {
   getAllEstates,
