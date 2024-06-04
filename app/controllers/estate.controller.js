@@ -100,10 +100,12 @@ export const updateEstate = (req, res) => {
     garden: req.body.garden,
     floors: req.body.floors,
     rooms: req.body.rooms,
-    phoneNumber: req.body.phoneNumber,
+    phoneNumber: req.body.phoneNumber
   })
     .then(estate => {
-      return res.status(200).send({ message: 'Record Updated Successfully', estate })
+      return res
+        .status(200)
+        .send({ message: 'Record Updated Successfully', estate })
     })
     .catch(error => res.status(500).send({ message: error.message }))
 }
@@ -116,11 +118,34 @@ export const deleteEstate = (req, res) => {
     .catch(error => res.status(500).send({ message: error.message }))
 }
 
+export const searchEstate = async (req, res) => {
+  try {
+    const resp = await Estate.aggregate([
+      {
+        $search: {
+          index: 'estates',
+          text: {
+            query: req.query.t,
+            path: {
+              wildcard: '*'
+            }
+          }
+        }
+      }
+    ])
+    console.log(resp);
+    return res.status(200).send({ message: 'Estate Retrieved Successfully', resp })
+  } catch (error) {
+    return res.status(500).send({ message: 'Error retrieving estate'})
+  }
+}
+
 export default {
   getAllEstates,
   getEstateById,
   createEstate,
   updateEstate,
   deleteEstate,
-  getEstatebyUserId
+  getEstatebyUserId,
+  searchEstate,
 }

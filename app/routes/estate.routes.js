@@ -15,4 +15,5 @@ export default app => {
   app.get('/api/estate', estateController.getEstateById)
   app.put('/api/estate', authJwt.verifyToken, estateController.updateEstate)
   app.delete('/api/estate', authJwt.verifyToken, estateController.deleteEstate)
+  app.get('/search', estateController.searchEstate)
 }
