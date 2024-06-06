@@ -5,15 +5,19 @@ const User = mongoose.model(
   new mongoose.Schema({
     username: {
       type: String,
-      required: true
+      required: true,
+      unique: true,
+      minLength: 3,
+      maxLength: 20
     },
     email: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     password: {
       type: String,
-      required: true
+      required: true,
     }
   })
 )
