@@ -5,11 +5,25 @@ const Estate = new mongoose.model(
   new mongoose.Schema({
     name: {
       type: String,
-      required: true
+      required: true,
+      enum: {
+        values: [
+          'House',
+          'House Upper Portion',
+          'House Lower Portion',
+          'Villa',
+          'Flat',
+          'Plot',
+          'Building',
+          'Office Floor'
+        ],
+        message: 'Invalid Property Type'
+      }
     },
     price: {
       type: Number,
-      required: true
+      required: true,
+      min: [1000, "Value must be greater than 999"]
     },
     propertySize: {
       type: String,
@@ -39,7 +53,14 @@ const Estate = new mongoose.model(
     },
     type: {
       type: String,
-      required: true
+      required: true,
+      enum: {
+        values: [
+          'For Rent',
+          'For Sale'
+        ],
+        message: 'Invalid Type - {VALUE}'
+      }
     },
     bedrooms: {
       type: Number,
