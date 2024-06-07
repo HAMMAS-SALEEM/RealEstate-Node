@@ -9,8 +9,8 @@ export const getAllEstates = (req, res) => {
     .then(estates => {
       if (estates.length === 0) {
         return res
-          .status(404)
-          .send({ status: 404, message: 'No Estates Found', estates })
+          .status(200)
+          .send({ status: 200, message: 'No Estates Found', estates })
       }
       res.status(200).send({
         status: 200,
@@ -66,7 +66,6 @@ export const createEstate = async (req, res) => {
         name: req.body.name,
         propertySize: req.body.propertySize,
         price: req.body.price,
-        image: req.body.image,
         address: req.body.address,
         type: req.body.type,
         bedrooms: req.body.bedrooms,
@@ -111,7 +110,6 @@ export const updateEstate = async (req, res) => {
       name: req.body.name,
       propertySize: req.body.propertySize,
       price: req.body.price,
-      image: req.body.image,
       address: req.body.address,
       type: req.body.type,
       bedrooms: req.body.bedrooms,
