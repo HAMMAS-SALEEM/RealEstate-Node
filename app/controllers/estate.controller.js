@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import db from '../models/index.js'
+import cloudinary from '../utils/cloudinary.js'
 
 const Estate = db.estate
 
@@ -52,35 +53,45 @@ export const getEstatebyUserId = (req, res) => {
     .catch(error => res.status(500).send({ message: error.message }))
 }
 
-export const createEstate = (req, res) => {
+export const createEstate = async (req, res) => {
   const user_id = new mongoose.Types.ObjectId(req.body.user_id)
-  const estate = new Estate({
-    name: req.body.name,
-    propertySize: req.body.propertySize,
-    price: req.body.price,
-    image: req.body.image,
-    address: req.body.address,
-    type: req.body.type,
-    bedrooms: req.body.bedrooms,
-    bathrooms: req.body.bathrooms,
-    garage: req.body.garage,
-    furnished: req.body.furnished,
-    swimmingPool: req.body.swimmingPool,
-    balcony: req.body.balcony,
-    garden: req.body.garden,
-    floors: req.body.floors,
-    rooms: req.body.rooms,
-    phoneNumber: req.body.phoneNumber,
-    user_id: user_id
-  })
-  estate
-    .save()
-    .then(estate =>
-      res
-        .status(200)
-        .send({ status: 200, message: 'Estate Created Successfully', estate })
-    )
-    .catch(error => res.status(500).send({ message: error.message }))
+  const { uploadedIMG } = req.body
+
+  if(uploadedIMG) {
+    const uploadRes = await cloudinary.uploader.upload(uploadedIMG, {
+      upload_preset: "realEstate"
+    })
+    if(uploadRes) {
+      const estate = new Estate({
+        name: req.body.name,
+        propertySize: req.body.propertySize,
+        price: req.body.price,
+        image: req.body.image,
+        address: req.body.address,
+        type: req.body.type,
+        bedrooms: req.body.bedrooms,
+        bathrooms: req.body.bathrooms,
+        garage: req.body.garage,
+        furnished: req.body.furnished,
+        swimmingPool: req.body.swimmingPool,
+        balcony: req.body.balcony,
+        garden: req.body.garden,
+        floors: req.body.floors,
+        rooms: req.body.rooms,
+        phoneNumber: req.body.phoneNumber,
+        uploadedIMG: req.body.uploadedIMG,
+        user_id: user_id
+      })
+      estate
+        .save()
+        .then(estate =>
+          res
+            .status(200)
+            .send({ status: 200, message: 'Estate Created Successfully', estate })
+        )
+        .catch(error => res.status(500).send({ message: error.message }))
+    }
+  }
 }
 
 export const updateEstate = (req, res) => {
