@@ -47,10 +47,6 @@ const Estate = new mongoose.model(
         required: true
       }
     },
-    image: {
-      type: String,
-      required: true
-    },
     type: {
       type: String,
       required: true,
@@ -106,7 +102,13 @@ const Estate = new mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
-    }
+    },
+    uploadedIMG: {
+      type: Object,
+      required: true
+    },
+  }, {
+    timestamps: true
   })
 )
 
